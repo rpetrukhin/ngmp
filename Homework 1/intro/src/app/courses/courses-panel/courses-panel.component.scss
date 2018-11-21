@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+
+    .search {
+        margin-left: 15px;
+    }
+
+    .mock {
+        flex-grow: 1;
+    }
+}

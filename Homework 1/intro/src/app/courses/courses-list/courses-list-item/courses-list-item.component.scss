@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+
+    header {
+        display: flex;
+
+        h3 {
+            margin: 0px;
+        }
+
+        .mock {
+            flex-grow: 1;
+        }
+
+        .duration {
+            margin-right: 20px;
+        }
+    }
+
+    .buttonsContainer {
+        margin-left: 10px;
+
+        .edit, .delete {
+            width: 100%;
+        }
+
+        .delete {
+            margin-top: 10px;
+        }
+    }
+}

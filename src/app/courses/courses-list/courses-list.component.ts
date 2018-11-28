@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CoursesListItem } from './courses-list-item/courses-list-item.model';
+import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { CoursesService } from '../courses.service';
 
 @Component({

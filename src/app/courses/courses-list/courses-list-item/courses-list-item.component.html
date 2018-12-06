@@ -1,15 +1,18 @@
 <div class="container">
-    <section>
-        <header>
-            <h3>{{course.title}}</h3>
-            <div class="mock"></div>
-            <span class="duration">{{course.duration}} min</span>
-            <span>{{course.creationDate.toDateString()}}</span>
-        </header>
-        <span>{{course.description}}</span>
-    </section>
-    <section class="buttonsContainer">
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
-    </section>
+  <section class="infoContainer">
+    <header>
+      <h3>{{ course.title }}</h3>
+      <div class="mock"></div>
+      <span class="duration">{{ course.duration }} min</span>
+      <span>{{ course.creationDate | date: 'dd.MM.yyyy' }}</span>
+    </header>
+    <span class="description">{{ course.description }}</span>
+  </section>
+
+  <section class="buttonsContainer">
+    <button><fa-icon [icon]="editIcon" size="lg"></fa-icon></button>
+    <button class="delete" (click)="deleteCourse()">
+      <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
+    </button>
+  </section>
 </div>

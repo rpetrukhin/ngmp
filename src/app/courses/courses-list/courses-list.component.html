@@ -1,6 +1,9 @@
 <ul>
   <li *ngFor="let course of courses">
-    <app-courses-list-item [course]="course"></app-courses-list-item>
+    <app-courses-list-item
+      [course]="course"
+      (deleted)="deleteCourse($event)"
+    ></app-courses-list-item>
   </li>
 </ul>
-<button class="load">Load more</button>
+<button class="load" (click)="loadMoreCourses()">Load more</button>

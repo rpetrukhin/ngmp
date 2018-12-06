@@ -1,31 +1,60 @@
 .container {
+  display: flex;
+
+  .infoContainer {
     display: flex;
+    flex-direction: column;
 
     header {
-        display: flex;
+      display: flex;
+      margin-bottom: 10px;
 
-        h3 {
-            margin: 0px;
-        }
+      h3 {
+        margin: 0px;
+        color: #34b7de;
+      }
 
-        .mock {
-            flex-grow: 1;
-        }
+      .mock {
+        flex-grow: 1;
+      }
 
-        .duration {
-            margin-right: 20px;
-        }
+      .duration {
+        margin-right: 20px;
+      }
     }
 
-    .buttonsContainer {
-        margin-left: 10px;
-
-        .edit, .delete {
-            width: 100%;
-        }
-
-        .delete {
-            margin-top: 10px;
-        }
+    .description {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
     }
+  }
+
+  .buttonsContainer {
+    margin-left: 50px;
+
+    button {
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+      border: none;
+      border-radius: 100%;
+      box-shadow: 0 0 5px 2px #ebebeb;
+      background-color: transparent;
+      color: #34b7de;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:active {
+        background-color: #34b7de4d;
+      }
+    }
+
+    .delete {
+      margin-top: 10px;
+    }
+  }
 }

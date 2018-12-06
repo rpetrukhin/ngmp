@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesPanelComponent } from './courses-panel/courses-panel.component';
@@ -11,10 +13,8 @@ import { CoursesListItemComponent } from './courses-list/courses-list-item/cours
     CoursesComponent,
     CoursesPanelComponent,
     CoursesListComponent,
-    CoursesListItemComponent
+    CoursesListItemComponent,
   ],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
 })
-export class CoursesModule { }
+export class CoursesModule {}

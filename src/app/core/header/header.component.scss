@@ -1,11 +1,33 @@
 header {
-    display: flex;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(rgba(white, 0.2), rgba(white, 0.2)),
+    linear-gradient(to right, #e77883 0%, #f7954f 100%);
+  padding: 0px 20px;
 
-    .mock {
-        flex-grow: 1;
+  .mock {
+    flex-grow: 1;
+  }
+
+  .userInfo {
+    margin-right: 20px;
+    color: white;
+  }
+
+  button {
+    padding: 10px;
+    background-color: transparent;
+    border: solid 1px white;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
     }
 
-    .userInfo {
-        margin-right: 20px;
+    &:active {
+      background-color: rgba(white, 0.5);
     }
+  }
 }

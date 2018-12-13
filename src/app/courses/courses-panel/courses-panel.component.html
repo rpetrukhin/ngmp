@@ -1,6 +1,6 @@
 <div class="container">
-  <input placeholder="Name, fragment or date">
-  <button class="search">Search</button>
+  <input placeholder="Name, fragment or date" [(ngModel)]="searchText" />
+  <button class="search" (click)="search()">Search</button>
   <div class="mock"></div>
   <button>Add course</button>
 </div>

@@ -6,16 +6,23 @@ import { CoursesService } from '../courses.service';
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss']
+  styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent implements OnInit {
-
   courses: CoursesListItem[] = [];
 
-  constructor(private coursesService: CoursesService) { }
+  constructor(private coursesService: CoursesService) {}
 
   ngOnInit() {
     this.courses = this.coursesService.getCourses();
   }
 
+  deleteCourse(id: number): void {
+    this.coursesService.deleteCourse(id);
+    this.courses = this.coursesService.getCourses();
+  }
+
+  loadMoreCourses(): void {
+    console.log('Load more');
+  }
 }

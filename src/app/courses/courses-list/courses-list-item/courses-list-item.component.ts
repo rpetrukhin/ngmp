@@ -1,17 +1,27 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+
+import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 
 @Component({
   selector: 'app-courses-list-item',
   templateUrl: './courses-list-item.component.html',
-  styleUrls: ['./courses-list-item.component.scss']
+  styleUrls: ['./courses-list-item.component.scss'],
 })
 export class CoursesListItemComponent implements OnInit {
+  @Input() course: CoursesListItem;
 
-  @Input() course: any;
+  @Output() deleted = new EventEmitter<number>();
 
-  constructor() { }
+  editIcon = faEdit;
+  deleteIcon = faTrashAlt;
 
-  ngOnInit() {
+  constructor() {}
+
+  ngOnInit() {}
+
+  deleteCourse() {
+    this.deleted.emit(this.course.id);
   }
-
 }

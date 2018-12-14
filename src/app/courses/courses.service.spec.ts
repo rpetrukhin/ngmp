@@ -3,10 +3,25 @@ import { TestBed } from '@angular/core/testing';
 import { CoursesService } from './courses.service';
 
 describe('CoursesService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: CoursesService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.get(CoursesService);
+  });
 
   it('should be created', () => {
-    const service: CoursesService = TestBed.get(CoursesService);
     expect(service).toBeTruthy();
+  });
+
+  it('getCourses should return correct data', () => {
+    expect(service.getCourses()).toBe(service.courses);
+  });
+
+  it('deleteCourse should delete correct course', () => {
+    const courses = service.courses;
+    service.deleteCourse(courses[0].id);
+
+    expect(service.getCourses()).toEqual([courses[1]]);
   });
 });

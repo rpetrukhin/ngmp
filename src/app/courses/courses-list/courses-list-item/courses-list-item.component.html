@@ -1,9 +1,10 @@
-<div class="container">
+<div class="container" [appBackgroundColor]="course.creationDate">
   <section class="infoContainer">
     <header>
-      <h3>{{ course.title }}</h3>
+      <h3>{{ course.title | uppercase }}</h3>
+      <fa-icon [icon]="starIcon" ngClass="star" *ngIf="course.topRated"></fa-icon>
       <div class="mock"></div>
-      <span class="duration">{{ course.duration }} min</span>
+      <span class="duration">{{ course.duration | duration }}</span>
       <span>{{ course.creationDate | date: 'dd.MM.yyyy' }}</span>
     </header>
     <span class="description">{{ course.description }}</span>

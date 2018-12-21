@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt, faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 
@@ -16,6 +15,7 @@ export class CoursesListItemComponent implements OnInit {
 
   editIcon = faEdit;
   deleteIcon = faTrashAlt;
+  starIcon = faStar;
 
   constructor() {}
 

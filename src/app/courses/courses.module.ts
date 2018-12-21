@@ -7,6 +7,9 @@ import { CoursesComponent } from './courses/courses.component';
 import { CoursesPanelComponent } from './courses-panel/courses-panel.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CoursesListItemComponent } from './courses-list/courses-list-item/courses-list-item.component';
+import { BackgroundColorDirective } from '../common/directives/background-color.directive';
+import { DurationPipe } from '../common/pipes/duration.pipe';
+import { OrderByCoursesPipe } from '../common/pipes/order-by-courses.pipe';
 
 @NgModule({
   declarations: [
@@ -14,6 +17,9 @@ import { CoursesListItemComponent } from './courses-list/courses-list-item/cours
     CoursesPanelComponent,
     CoursesListComponent,
     CoursesListItemComponent,
+    BackgroundColorDirective,
+    DurationPipe,
+    OrderByCoursesPipe,
   ],
   imports: [CommonModule, FormsModule, FontAwesomeModule],
 })

@@ -1,1 +1,2 @@
-<app-courses-panel></app-courses-panel> <app-courses-list></app-courses-list>
+<app-courses-panel (searched)="search($event)"></app-courses-panel>
+<app-courses-list [searchCriteria]="searchCriteria"></app-courses-list>

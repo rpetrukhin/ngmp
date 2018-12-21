@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-courses-panel',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses-panel.component.scss'],
 })
 export class CoursesPanelComponent implements OnInit {
+  @Output() searched = new EventEmitter<string>();
+
   searchText: string;
 
   constructor() {}
@@ -13,6 +15,6 @@ export class CoursesPanelComponent implements OnInit {
   ngOnInit() {}
 
   search(): void {
-    console.log(this.searchText);
+    this.searched.emit(this.searchText);
   }
 }

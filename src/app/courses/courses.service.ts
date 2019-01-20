@@ -9,21 +9,33 @@ export class CoursesService {
   courses: CoursesListItem[] = [
     {
       id: 1,
-      title: 'Video Course 1',
-      creationDate: new Date(Date.now()),
+      title: 'Angular',
+      creationDate: new Date(2018, 11, 16),
       duration: 88,
       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat`,
+      topRated: true,
     },
     {
       id: 2,
-      title: 'Video Course 2',
-      creationDate: new Date(Date.now()),
+      title: 'React',
+      creationDate: new Date(2019, 0, 1),
       duration: 27,
       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat`,
+      topRated: false,
+    },
+    {
+      id: 3,
+      title: 'Vue',
+      creationDate: new Date(2017, 4, 25),
+      duration: 344,
+      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat`,
+      topRated: false,
     },
   ];
 

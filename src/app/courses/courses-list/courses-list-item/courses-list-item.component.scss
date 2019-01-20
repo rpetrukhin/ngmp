@@ -1,5 +1,8 @@
 .container {
   display: flex;
+  padding: 15px 20px;
+  box-shadow: 0 0 5px 2px #ebebeb;
+  border-radius: 15px;
 
   .infoContainer {
     display: flex;
@@ -12,6 +15,11 @@
       h3 {
         margin: 0px;
         color: #34b7de;
+      }
+
+      .star {
+        margin-left: 5px;
+        color: #e77883;
       }
 
       .mock {
@@ -39,7 +47,7 @@
       padding: 10px;
       border: none;
       border-radius: 100%;
-      box-shadow: 0 0 5px 2px #ebebeb;
+      box-shadow: 0 0 3px 1px #34b7de;
       background-color: transparent;
       color: #34b7de;
       cursor: pointer;

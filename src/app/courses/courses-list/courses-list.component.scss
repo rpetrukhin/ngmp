@@ -3,10 +3,7 @@ ul {
   padding: 0px;
 
   li {
-    padding: 15px 20px;
     margin-bottom: 30px;
-    box-shadow: 0 0 5px 2px #ebebeb;
-    border-radius: 15px;
   }
 }
 
@@ -27,4 +24,13 @@ ul {
     background: linear-gradient(rgba(white, 0.5), rgba(white, 0.5)),
       linear-gradient(to right, #e77883 0%, #f7954f 100%);
   }
+}
+
+.nodata {
+  margin-top: 25px;
+  padding: 10px;
+  text-align: center;
+  background: linear-gradient(to right, #e77883 0%, #f7954f 100%);
+  box-shadow: 0 0 5px 1px #e77883;
+  color: white;
 }

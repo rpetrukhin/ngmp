@@ -22,6 +22,9 @@ export class CoursesListComponent implements OnInit, OnChanges {
   courses: CoursesListItem[] = [];
   filteredCourses: CoursesListItem[] = [];
 
+  isModalShowed = false;
+  idOfSelectedCourseForDelete: number;
+
   constructor(
     private coursesService: CoursesService,
     private filterCourses: FilterCoursesPipe
@@ -42,10 +45,28 @@ export class CoursesListComponent implements OnInit, OnChanges {
     }
   }
 
-  deleteCourse(id: number): void {
-    this.coursesService.deleteCourse(id);
+  showModal(id: number): void {
+    this.isModalShowed = true;
+    this.idOfSelectedCourseForDelete = id;
+  }
+
+  hideModal(): void {
+    this.isModalShowed = false;
+  }
+
+  cancelModal(event: MouseEvent): void {
+    if ((event.target as any).tagName === 'SECTION') {
+      this.hideModal();
+    }
+  }
+
+  deleteCourse(): void {
+    this.coursesService.deleteCourse(this.idOfSelectedCourseForDelete);
+
     this.courses = this.coursesService.getCourses();
     this.filteredCourses = this.courses.slice();
+
+    this.hideModal();
   }
 
   loadMoreCourses(): void {

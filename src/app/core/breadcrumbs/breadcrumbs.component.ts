@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AuthService } from 'src/app/auth/auth.service';
+
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
-  styleUrls: ['./breadcrumbs.component.scss']
+  styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

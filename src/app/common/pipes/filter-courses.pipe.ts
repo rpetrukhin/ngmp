@@ -10,6 +10,13 @@ export class FilterCoursesPipe implements PipeTransform {
     courses: Array<CoursesListItem>,
     searchCriteria: string
   ): Array<CoursesListItem> {
-    return courses.filter(course => course.title.toLowerCase().search(searchCriteria.toLowerCase()) > -1);
+    if (searchCriteria) {
+      return courses.filter(
+        course =>
+          course.title.toLowerCase().search(searchCriteria.toLowerCase()) > -1
+      );
+    } else {
+      return courses.slice();
+    }
   }
 }

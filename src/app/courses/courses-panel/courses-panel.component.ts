@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses-panel',
@@ -10,11 +11,15 @@ export class CoursesPanelComponent implements OnInit {
 
   searchText: string;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
   search(): void {
     this.searched.emit(this.searchText);
+  }
+
+  addCourse() {
+    this.router.navigate(['add-course']);
   }
 }

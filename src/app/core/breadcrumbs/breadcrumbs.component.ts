@@ -11,4 +11,8 @@ export class BreadcrumbsComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {}
+
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
 }

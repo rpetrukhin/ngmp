@@ -23,6 +23,10 @@ export class HeaderComponent implements OnInit {
     this.user = this.userService.getUser();
   }
 
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
+
   logout(): void {
     this.authService.logout();
     console.log('logout');

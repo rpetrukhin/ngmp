@@ -1,0 +1,21 @@
+<form>
+  <label>Title:</label>
+  <input [(ngModel)]="title" [ngModelOptions]="{ standalone: true }" />
+  <label>Description:</label>
+  <textarea
+    [(ngModel)]="description"
+    [ngModelOptions]="{ standalone: true }"
+  ></textarea>
+  <label>Date:</label>
+  <input
+    type="date"
+    [(ngModel)]="date"
+    [ngModelOptions]="{ standalone: true }"
+  />
+  <label>Duration:</label>
+  <input [(ngModel)]="duration" [ngModelOptions]="{ standalone: true }" />
+  <div class="buttonsContainer">
+    <button (click)="cancel()" class="cancel" type="button">Cancel</button>
+    <button (click)="save()" type="button">Save</button>
+  </div>
+</form>

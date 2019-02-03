@@ -4,6 +4,7 @@
       <app-courses-list-item
         [course]="course"
         (deleted)="showModal($event)"
+        (edited)="editCourse($event)"
       ></app-courses-list-item>
     </li>
   </ul>
@@ -16,7 +17,7 @@
   <div class="modalContent">
     <header>Do you really want to delete this course?</header>
     <div class="buttonsContainer">
-      <button (click)="hideModal()">No</button>
+      <button (click)="hideModal()" class="cancel">No</button>
       <button (click)="deleteCourse()">Yes</button>
     </div>
   </div>

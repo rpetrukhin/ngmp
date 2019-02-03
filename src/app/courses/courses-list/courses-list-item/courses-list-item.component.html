@@ -11,7 +11,7 @@
   </section>
 
   <section class="buttonsContainer">
-    <button><fa-icon [icon]="editIcon" size="lg"></fa-icon></button>
+    <button (click)="editCourse()"><fa-icon [icon]="editIcon" size="lg"></fa-icon></button>
     <button class="delete" (click)="deleteCourse()">
       <fa-icon [icon]="deleteIcon" size="lg"></fa-icon>
     </button>

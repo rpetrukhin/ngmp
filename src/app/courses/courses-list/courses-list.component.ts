@@ -5,6 +5,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { CoursesService } from '../courses.service';
@@ -27,12 +28,16 @@ export class CoursesListComponent implements OnInit, OnChanges {
 
   constructor(
     private coursesService: CoursesService,
-    private filterCourses: FilterCoursesPipe
+    private filterCourses: FilterCoursesPipe,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.courses = this.coursesService.getCourses();
-    this.filteredCourses = this.courses.slice();
+    this.filteredCourses = this.filterCourses.transform(
+      this.courses,
+      this.searchCriteria
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -64,9 +69,16 @@ export class CoursesListComponent implements OnInit, OnChanges {
     this.coursesService.deleteCourse(this.idOfSelectedCourseForDelete);
 
     this.courses = this.coursesService.getCourses();
-    this.filteredCourses = this.courses.slice();
+    this.filteredCourses = this.filterCourses.transform(
+      this.courses,
+      this.searchCriteria
+    );
 
     this.hideModal();
+  }
+
+  editCourse(id: number): void {
+    this.router.navigate([`edit-course/${id}`]);
   }
 
   loadMoreCourses(): void {

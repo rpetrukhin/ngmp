@@ -73,6 +73,16 @@ ul {
             linear-gradient(to right, #e77883 0%, #f7954f 100%);
         }
       }
+
+      .cancel {
+        background: none;
+        background-color: #34b7de;
+
+        &:active {
+          background: none;
+          background-color: #34b7de4d;
+        }
+      }
     }
   }
 }

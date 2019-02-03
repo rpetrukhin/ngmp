@@ -1,8 +1,16 @@
 nav {
+  display: flex;
   padding: 10px 20px;
   background: linear-gradient(to right, #e77883 0%, #f7954f 100%);
 
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
   span {
     color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

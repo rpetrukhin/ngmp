@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ROUTES } from 'src/app/consts/routes';
+
 @Component({
   selector: 'app-logo',
   templateUrl: './logo.component.html',
@@ -12,6 +14,6 @@ export class LogoComponent implements OnInit {
   ngOnInit() {}
 
   goHome(): void {
-    this.router.navigate(['courses']);
+    this.router.navigate([ROUTES.courses]);
   }
 }

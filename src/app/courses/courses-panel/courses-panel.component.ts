@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ROUTES } from 'src/app/consts/routes';
+
 @Component({
   selector: 'app-courses-panel',
   templateUrl: './courses-panel.component.html',
@@ -20,6 +22,6 @@ export class CoursesPanelComponent implements OnInit {
   }
 
   addCourse() {
-    this.router.navigate(['add-course']);
+    this.router.navigate([ROUTES.addCourse]);
   }
 }

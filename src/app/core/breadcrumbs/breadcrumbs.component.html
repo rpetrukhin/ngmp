@@ -1,1 +1,4 @@
-<nav *ngIf="isAuthenticated"><span>Courses</span></nav>
+<nav *ngIf="isAuthenticated">
+  <a routerLink="/courses">Courses</a>
+  <span>{{ courseName }}</span>
+</nav>

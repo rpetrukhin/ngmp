@@ -34,3 +34,45 @@ ul {
   box-shadow: 0 0 5px 1px #e77883;
   color: white;
 }
+
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+
+    .buttonsContainer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      button {
+        width: 47%;
+        padding: 10px;
+        background: linear-gradient(to right, #e77883 0%, #f7954f 100%);
+        color: white;
+        cursor: pointer;
+        border: none;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:active {
+          background: linear-gradient(rgba(white, 0.5), rgba(white, 0.5)),
+            linear-gradient(to right, #e77883 0%, #f7954f 100%);
+        }
+      }
+    }
+  }
+}

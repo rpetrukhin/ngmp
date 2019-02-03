@@ -1,6 +1,10 @@
 <header>
   <app-logo></app-logo>
   <div class="mock"></div>
-  <span class="userInfo">{{user.firstName}} {{user.lastName}}</span>
-  <button>Log off</button>
+  <span class="userInfo" *ngIf="authService.isAuthenticated"
+    >{{ user.firstName }} {{ user.lastName }}</span
+  >
+  <button (click)="logout()" *ngIf="authService.isAuthenticated">
+    Log off
+  </button>
 </header>

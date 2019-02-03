@@ -3,7 +3,7 @@
     <li *ngFor="let course of (filteredCourses | orderByCourses)">
       <app-courses-list-item
         [course]="course"
-        (deleted)="deleteCourse($event)"
+        (deleted)="showModal($event)"
       ></app-courses-list-item>
     </li>
   </ul>
@@ -11,4 +11,13 @@
 </section>
 <section *ngIf="!filteredCourses.length">
   <div class="nodata"><span> NO DATA. FEEL FREE TO ADD NEW COURSE </span></div>
+</section>
+<section *ngIf="isModalShowed" class="modal" (click)="cancelModal($event)">
+  <div class="modalContent">
+    <header>Do you really want to delete this course?</header>
+    <div class="buttonsContainer">
+      <button (click)="hideModal()">No</button>
+      <button (click)="deleteCourse()">Yes</button>
+    </div>
+  </div>
 </section>

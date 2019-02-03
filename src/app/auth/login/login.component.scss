@@ -1,0 +1,41 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  margin: 0 auto;
+
+  input {
+    border: solid 2px #e77883;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #787878;
+
+    &::placeholder {
+      color: #787878;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    padding: 10px;
+    background: linear-gradient(to right, #e77883 0%, #f7954f 100%);
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      background: linear-gradient(rgba(white, 0.5), rgba(white, 0.5)),
+        linear-gradient(to right, #e77883 0%, #f7954f 100%);
+    }
+  }
+}

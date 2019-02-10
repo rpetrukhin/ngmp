@@ -4,85 +4,147 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { CoursesService } from '../courses.service';
-import { FilterCoursesPipe } from 'src/app/common/pipes/filter-courses.pipe';
 import { ROUTES } from 'src/app/consts/routes';
+
+const COURSES_COUNT = 10;
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
-  providers: [FilterCoursesPipe],
 })
-export class CoursesListComponent implements OnInit, OnChanges {
-  @Input() searchCriteria: string;
+export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
+  private coursesSubscriptions: Subscription[] = [];
+  private currentCoursesCount = 0;
 
-  courses: CoursesListItem[] = [];
-  filteredCourses: CoursesListItem[] = [];
+  @Input() public searchCriteria: string;
+  public courses: CoursesListItem[] = [];
+  public isModalShowed = false;
+  public idOfSelectedCourseForDelete: number;
+  public couldLoadMore = true;
 
-  isModalShowed = false;
-  idOfSelectedCourseForDelete: number;
-
-  constructor(
+  public constructor(
     private coursesService: CoursesService,
-    private filterCourses: FilterCoursesPipe,
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.courses = this.coursesService.getCourses();
-    this.filteredCourses = this.filterCourses.transform(
-      this.courses,
-      this.searchCriteria
+  public ngOnInit() {
+    this.coursesSubscriptions.push(
+      this.coursesService
+        .getCourses(0, COURSES_COUNT, this.searchCriteria)
+        .subscribe(
+          (res: CoursesListItem[]) => {
+            this.courses = res;
+            this.currentCoursesCount = COURSES_COUNT;
+            if (res.length < COURSES_COUNT) {
+              this.couldLoadMore = false;
+            }
+          },
+          err => console.log(err.error)
+        )
     );
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges) {
     const { currentValue, previousValue } = changes.searchCriteria;
     if (currentValue !== previousValue) {
-      this.filteredCourses = this.filterCourses.transform(
-        this.courses,
-        currentValue
+      this.coursesSubscriptions.push(
+        this.coursesService
+          .getCourses(0, COURSES_COUNT, currentValue)
+          .subscribe(
+            (res: CoursesListItem[]) => {
+              this.courses = res;
+              this.currentCoursesCount = COURSES_COUNT;
+              if (res.length < COURSES_COUNT) {
+                this.couldLoadMore = false;
+              }
+            },
+            err => console.log(err.error)
+          )
       );
     }
   }
 
-  showModal(id: number): void {
+  public ngOnDestroy() {
+    this.coursesSubscriptions.forEach(coursesSubscription =>
+      coursesSubscription.unsubscribe()
+    );
+  }
+
+  public showModal(id: number): void {
     this.isModalShowed = true;
     this.idOfSelectedCourseForDelete = id;
   }
 
-  hideModal(): void {
+  public hideModal(): void {
     this.isModalShowed = false;
   }
 
-  cancelModal(event: MouseEvent): void {
+  public cancelModal(event: MouseEvent): void {
     if ((event.target as any).tagName === 'SECTION') {
       this.hideModal();
     }
   }
 
-  deleteCourse(): void {
-    this.coursesService.deleteCourse(this.idOfSelectedCourseForDelete);
-
-    this.courses = this.coursesService.getCourses();
-    this.filteredCourses = this.filterCourses.transform(
-      this.courses,
-      this.searchCriteria
+  public deleteCourse(): void {
+    this.coursesSubscriptions.push(
+      this.coursesService
+        .deleteCourse(this.idOfSelectedCourseForDelete)
+        .subscribe(
+          deleteRes => {
+            this.coursesSubscriptions.push(
+              this.coursesService
+                .getCourses(0, COURSES_COUNT, this.searchCriteria)
+                .subscribe(
+                  (res: CoursesListItem[]) => {
+                    this.courses = res;
+                    this.currentCoursesCount = COURSES_COUNT;
+                    if (res.length < COURSES_COUNT) {
+                      this.couldLoadMore = false;
+                    }
+                  },
+                  err => console.log(err.error)
+                )
+            );
+          },
+          err => console.log(err)
+        )
     );
 
     this.hideModal();
   }
 
-  editCourse(id: number): void {
+  public editCourse(id: number): void {
     this.router.navigate([`${ROUTES.courses}/${id}`]);
   }
 
-  loadMoreCourses(): void {
-    console.log('Load more');
+  public loadMoreCourses(): void {
+    if (this.couldLoadMore) {
+      this.coursesSubscriptions.push(
+        this.coursesService
+          .getCourses(
+            this.currentCoursesCount,
+            COURSES_COUNT,
+            this.searchCriteria
+          )
+          .subscribe(
+            (res: CoursesListItem[]) => {
+              this.courses = [...this.courses, ...res];
+              this.currentCoursesCount += COURSES_COUNT;
+              if (res.length < COURSES_COUNT) {
+                this.couldLoadMore = false;
+              }
+            },
+            err => console.log(err.error)
+          )
+      );
+    }
   }
 }

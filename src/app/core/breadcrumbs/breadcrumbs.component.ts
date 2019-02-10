@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
 import { CoursesService } from 'src/app/courses/courses.service';
+import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -11,38 +12,43 @@ import { CoursesService } from 'src/app/courses/courses.service';
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
-  courseName: string;
-  routeSub: Subscription;
+  private routeSub: Subscription;
+  private courseSub: Subscription;
 
-  constructor(
+  public courseName: string;
+
+  public constructor(
     private authService: AuthService,
     private router: Router,
     private coursesService: CoursesService
   ) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.routeSub = this.router.events.subscribe(event =>
       this.setCourseName(event)
     );
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.routeSub.unsubscribe();
+    this.courseSub.unsubscribe();
   }
 
-  get isAuthenticated(): boolean {
+  public get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
-  setCourseName(event: Event) {
+  public setCourseName(event: Event) {
     if (!(event instanceof NavigationEnd)) {
       return;
     }
     const paramAfterCourses = event.url.split('/')[2];
     if (Number(paramAfterCourses)) {
-      this.courseName = `/${
-        this.coursesService.getCourse(Number(paramAfterCourses)).title
-      }`;
+      this.courseSub = this.coursesService
+        .getCourse(Number(paramAfterCourses))
+        .subscribe((res: CoursesListItem) => {
+          this.courseName = `/${res.title}`;
+        });
     } else if (paramAfterCourses === 'new') {
       this.courseName = '/new';
     } else {

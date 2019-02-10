@@ -8,7 +8,8 @@ import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.mode
 export class OrderByCoursesPipe implements PipeTransform {
   transform(courses: Array<CoursesListItem>): Array<CoursesListItem> {
     return courses.sort(
-      (a, b) => b.creationDate.getTime() - a.creationDate.getTime()
+      (a, b) =>
+        new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
     );
   }
 }

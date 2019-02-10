@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpClientModule } from '@angular/common/http';
 
 import { CoursesComponent } from './courses/courses.component';
 import { CoursesPanelComponent } from './courses-panel/courses-panel.component';
@@ -25,6 +26,6 @@ import { CreateOrEditCourseComponent } from './create-or-edit-course/create-or-e
     FilterCoursesPipe,
     CreateOrEditCourseComponent,
   ],
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, HttpClientModule],
 })
 export class CoursesModule {}

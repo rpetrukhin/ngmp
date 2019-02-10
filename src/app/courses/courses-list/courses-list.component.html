@@ -1,6 +1,6 @@
-<section *ngIf="filteredCourses.length">
+<section *ngIf="courses.length">
   <ul>
-    <li *ngFor="let course of (filteredCourses | orderByCourses)">
+    <li *ngFor="let course of (courses | orderByCourses)">
       <app-courses-list-item
         [course]="course"
         (deleted)="showModal($event)"
@@ -8,9 +8,14 @@
       ></app-courses-list-item>
     </li>
   </ul>
-  <button class="load" (click)="loadMoreCourses()">Load more</button>
+  <button class="load" (click)="loadMoreCourses()" *ngIf="couldLoadMore">
+    Load more
+  </button>
+  <div class="allCoursesLoaded" *ngIf="!couldLoadMore">
+    <span> YOU'VE LOADED ALL EXISTED COURSES :) </span>
+  </div>
 </section>
-<section *ngIf="!filteredCourses.length">
+<section *ngIf="!courses.length">
   <div class="nodata"><span> NO DATA. FEEL FREE TO ADD NEW COURSE </span></div>
 </section>
 <section *ngIf="isModalShowed" class="modal" (click)="cancelModal($event)">

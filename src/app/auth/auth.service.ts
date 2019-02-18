@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { UserAuthInfo } from 'src/app-entities/classes/user-auth-info.model';
 
@@ -6,27 +8,19 @@ import { UserAuthInfo } from 'src/app-entities/classes/user-auth-info.model';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  public isAuthenticated = false;
 
-  _isAuthenticated = false;
-  _userInfo: string;
+  public constructor(private http: HttpClient) {}
 
-  login(info: UserAuthInfo): void {
-    localStorage.setItem('userInfo', JSON.stringify(info));
-    this._isAuthenticated = true;
-    this._userInfo = info.email;
+  public login(info: UserAuthInfo): Observable<Object> {
+    return this.http.post(
+      'http://localhost:3004/auth/login',
+      JSON.stringify(info)
+    );
   }
 
-  logout(): void {
-    localStorage.removeItem('userInfo');
-    this._isAuthenticated = false;
-  }
-
-  get isAuthenticated(): boolean {
-    return this._isAuthenticated;
-  }
-
-  get userInfo(): string {
-    return this._userInfo;
+  public logout(): void {
+    this.isAuthenticated = false;
+    localStorage.removeItem('token');
   }
 }

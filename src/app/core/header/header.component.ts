@@ -12,25 +12,25 @@ import { ROUTES } from 'src/app/consts/routes';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  user: User;
-
-  constructor(
+  public constructor(
     private userService: UserService,
     private authService: AuthService,
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.user = this.userService.getUser();
+  public ngOnInit() {}
+
+  public get user(): User {
+    return this.userService.currentUser;
   }
 
-  get isAuthenticated(): boolean {
+  public get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
 
-  logout(): void {
+  public logout(): void {
     this.authService.logout();
-    console.log('logout');
+    this.userService.clearUser();
     this.router.navigate([ROUTES.login]);
   }
 }

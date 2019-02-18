@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { CoursesService } from '../courses.service';
 import { FilterCoursesPipe } from 'src/app/common/pipes/filter-courses.pipe';
+import { ROUTES } from 'src/app/consts/routes';
 
 @Component({
   selector: 'app-courses-list',
@@ -78,7 +79,7 @@ export class CoursesListComponent implements OnInit, OnChanges {
   }
 
   editCourse(id: number): void {
-    this.router.navigate([`edit-course/${id}`]);
+    this.router.navigate([`${ROUTES.courses}/${id}`]);
   }
 
   loadMoreCourses(): void {

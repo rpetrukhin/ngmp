@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
+import { ROUTES } from 'src/app/consts/routes';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,6 @@ export class LoginComponent implements OnInit {
       password: this.password,
     });
     console.log('‘logged in successfully');
-    this.router.navigate(['courses']);
+    this.router.navigate([ROUTES.courses]);
   }
 }

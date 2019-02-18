@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { CoursesModule } from './courses/courses.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { NotFoundModule } from './not-found/not-found.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
     CoursesModule,
     UserModule,
     AuthModule,
+    NotFoundModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

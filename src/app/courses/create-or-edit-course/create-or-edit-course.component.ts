@@ -5,6 +5,7 @@ import * as moment from 'moment';
 
 import { CoursesService } from '../courses.service';
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
+import { ROUTES } from 'src/app/consts/routes';
 
 @Component({
   selector: 'app-create-or-edit-course',
@@ -64,10 +65,10 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
         topRated: false,
       });
     }
-    this.router.navigate(['courses']);
+    this.router.navigate([ROUTES.courses]);
   }
 
   cancel(): void {
-    this.router.navigate(['courses']);
+    this.router.navigate([ROUTES.courses]);
   }
 }

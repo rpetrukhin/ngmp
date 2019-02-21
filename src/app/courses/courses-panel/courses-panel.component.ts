@@ -1,5 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { ROUTES } from 'src/app/consts/routes';
 
@@ -8,20 +16,34 @@ import { ROUTES } from 'src/app/consts/routes';
   templateUrl: './courses-panel.component.html',
   styleUrls: ['./courses-panel.component.scss'],
 })
-export class CoursesPanelComponent implements OnInit {
-  @Output() searched = new EventEmitter<string>();
+export class CoursesPanelComponent implements OnInit, OnDestroy {
+  @Output() public searched = new EventEmitter<string>();
 
-  searchText: string;
+  public searchText: string;
 
-  constructor(private router: Router) {}
+  private subject: Subject<string> = new Subject();
 
-  ngOnInit() {}
+  public constructor(private router: Router) {}
 
-  search(): void {
-    this.searched.emit(this.searchText);
+  public ngOnInit() {
+    this.subject.pipe(debounceTime(700)).subscribe(searchText => {
+      if (searchText.length >= 3) {
+        this.searched.emit(searchText);
+      } else {
+        this.searched.emit('');
+      }
+    });
   }
 
-  addCourse() {
+  public ngOnDestroy() {
+    this.subject.unsubscribe();
+  }
+
+  public onKeyUp(event: KeyboardEvent) {
+    this.subject.next((<HTMLInputElement>event.target).value);
+  }
+
+  public addCourse() {
     this.router.navigate([ROUTES.addCourse]);
   }
 }

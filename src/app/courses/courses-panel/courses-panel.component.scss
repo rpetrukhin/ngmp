@@ -1,7 +1,9 @@
 .container {
   display: flex;
+  justify-content: space-between;
 
   input {
+    min-width: 400px;
     padding: 10px;
     border-radius: 5px;
     border: solid 2px #e77883;
@@ -27,13 +29,5 @@
       background: linear-gradient(rgba(white, 0.5), rgba(white, 0.5)),
         linear-gradient(to right, #e77883 0%, #f7954f 100%);
     }
-  }
-
-  .search {
-    margin-left: 15px;
-  }
-
-  .mock {
-    flex-grow: 1;
   }
 }

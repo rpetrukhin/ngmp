@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, Event } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
-import { AuthService } from 'src/app/auth/auth.service';
 import { CoursesService } from 'src/app/courses/courses.service';
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
+import * as fromAuth from 'src/app/auth/reducers/auth.reducer';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -18,7 +19,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   public courseName: string;
 
   public constructor(
-    private authService: AuthService,
+    private store: Store<fromAuth.State>,
     private router: Router,
     private coursesService: CoursesService
   ) {}
@@ -34,8 +35,8 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     this.courseSub.unsubscribe();
   }
 
-  public get isAuthenticated(): boolean {
-    return this.authService.isAuthenticated;
+  public get isAuthenticated(): Observable<boolean> {
+    return this.store.pipe(select(fromAuth.getIsAuthenticated));
   }
 
   public setCourseName(event: Event) {

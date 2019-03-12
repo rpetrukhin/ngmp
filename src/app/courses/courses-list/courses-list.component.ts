@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { CoursesService } from '../courses.service';
 import { ROUTES } from 'src/app/consts/routes';
+import { SpinnerService } from 'src/app/spinner/spinner.service';
 
 const COURSES_COUNT = 10;
 
@@ -32,10 +33,12 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
 
   public constructor(
     private coursesService: CoursesService,
-    private router: Router
+    private router: Router,
+    private spinnerService: SpinnerService
   ) {}
 
   public ngOnInit() {
+    this.spinnerService.numberOfRequests++;
     this.coursesSubscriptions.push(
       this.coursesService
         .getCourses(0, COURSES_COUNT, this.searchCriteria)
@@ -46,8 +49,16 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
             if (res.length < COURSES_COUNT) {
               this.couldLoadMore = false;
             }
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
           },
-          err => console.log(err.error)
+          err => {
+            console.log(err.error);
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          }
         )
     );
   }
@@ -55,6 +66,7 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnChanges(changes: SimpleChanges) {
     const { currentValue, previousValue } = changes.searchCriteria;
     if (currentValue !== previousValue) {
+      this.spinnerService.numberOfRequests++;
       this.coursesSubscriptions.push(
         this.coursesService
           .getCourses(0, COURSES_COUNT, currentValue)
@@ -65,8 +77,16 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
               if (res.length < COURSES_COUNT) {
                 this.couldLoadMore = false;
               }
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
             },
-            err => console.log(err.error)
+            err => {
+              console.log(err.error);
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
+            }
           )
       );
     }
@@ -94,11 +114,13 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public deleteCourse(): void {
+    this.spinnerService.numberOfRequests++;
     this.coursesSubscriptions.push(
       this.coursesService
         .deleteCourse(this.idOfSelectedCourseForDelete)
         .subscribe(
           deleteRes => {
+            this.spinnerService.numberOfRequests++;
             this.coursesSubscriptions.push(
               this.coursesService
                 .getCourses(0, COURSES_COUNT, this.searchCriteria)
@@ -109,12 +131,28 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
                     if (res.length < COURSES_COUNT) {
                       this.couldLoadMore = false;
                     }
+                    setTimeout(() => {
+                      this.spinnerService.numberOfRequests--;
+                    }, 700);
                   },
-                  err => console.log(err.error)
+                  err => {
+                    console.log(err);
+                    setTimeout(() => {
+                      this.spinnerService.numberOfRequests--;
+                    }, 700);
+                  }
                 )
             );
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
           },
-          err => console.log(err)
+          err => {
+            console.log(err);
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          }
         )
     );
 
@@ -127,6 +165,7 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
 
   public loadMoreCourses(): void {
     if (this.couldLoadMore) {
+      this.spinnerService.numberOfRequests++;
       this.coursesSubscriptions.push(
         this.coursesService
           .getCourses(
@@ -141,8 +180,16 @@ export class CoursesListComponent implements OnInit, OnChanges, OnDestroy {
               if (res.length < COURSES_COUNT) {
                 this.couldLoadMore = false;
               }
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
             },
-            err => console.log(err.error)
+            err => {
+              console.log(err);
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
+            }
           )
       );
     }

@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { NotFoundModule } from './not-found/not-found.module';
 import { TokenInterceptor } from './common/interceptors/token.interceptor';
+import { SpinnerModule } from './spinner/spinner.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { TokenInterceptor } from './common/interceptors/token.interceptor';
     UserModule,
     AuthModule,
     NotFoundModule,
+    SpinnerModule,
   ],
   providers: [
     {

@@ -1,6 +1,8 @@
 <div class="container">
-  <input placeholder="Name, fragment or date" [(ngModel)]="searchText" />
-  <button class="search" (click)="search()">Search</button>
-  <div class="mock"></div>
+  <input
+    placeholder="Name or fragment of description (enter at least 3 characters)"
+    [(ngModel)]="searchText"
+    (keyup)="onKeyUp($event)"
+  />
   <button (click)="addCourse()">Add course</button>
 </div>

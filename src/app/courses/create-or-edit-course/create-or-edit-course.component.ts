@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { CoursesService } from '../courses.service';
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { ROUTES } from 'src/app/consts/routes';
+import { SpinnerService } from 'src/app/spinner/spinner.service';
 
 @Component({
   selector: 'app-create-or-edit-course',
@@ -25,12 +26,14 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private spinnerService: SpinnerService
   ) {}
 
   public ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       if (params.id) {
+        this.spinnerService.numberOfRequests++;
         this.courseSubs.push(
           this.coursesService
             .getCourse(Number(params.id))
@@ -40,6 +43,9 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
               this.description = this.course.description;
               this.date = moment(this.course.creationDate).format('YYYY-MM-DD');
               this.duration = this.course.duration;
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
             })
         );
       }
@@ -52,6 +58,7 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
   }
 
   public save() {
+    this.spinnerService.numberOfRequests++;
     if (this.course) {
       this.courseSubs.push(
         this.coursesService
@@ -65,8 +72,16 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
           .subscribe(
             res => {
               this.router.navigate([ROUTES.courses]);
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
             },
-            err => console.log(err)
+            err => {
+              console.log(err);
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
+            }
           )
       );
     } else {
@@ -83,8 +98,16 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
           .subscribe(
             res => {
               this.router.navigate([ROUTES.courses]);
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
             },
-            err => console.log(err)
+            err => {
+              console.log(err);
+              setTimeout(() => {
+                this.spinnerService.numberOfRequests--;
+              }, 700);
+            }
           )
       );
     }

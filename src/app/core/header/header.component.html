@@ -4,7 +4,7 @@
   <span class="userInfo" *ngIf="isAuthenticated"
     >{{ user.firstName }} {{ user.lastName }}</span
   >
-  <button (click)="logout()" *ngIf="isAuthenticated">
+  <button (click)="logout()" *ngIf="(isAuthenticated | async)">
     Log off
   </button>
 </header>

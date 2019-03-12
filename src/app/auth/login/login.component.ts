@@ -1,59 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { AuthService } from '../auth.service';
-import { UserService } from 'src/app/user/user.service';
-import { ROUTES } from 'src/app/consts/routes';
-import { SpinnerService } from 'src/app/spinner/spinner.service';
+import * as AuthAction from '../actions/auth.actions';
+import * as fromAuth from '../reducers/auth.reducer';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  private loginSub: Subscription;
-
+export class LoginComponent implements OnInit {
   public email: string;
   public password: string;
 
-  public constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private spinnerService: SpinnerService,
-    private router: Router
-  ) {}
+  public constructor(private store: Store<fromAuth.State>) {}
 
   public ngOnInit() {}
 
-  public ngOnDestroy() {
-    this.loginSub.unsubscribe();
-  }
-
   public login(): void {
-    this.spinnerService.numberOfRequests++;
-    this.loginSub = this.authService
-      .login({
-        login: this.email,
-        password: this.password,
-      })
-      .subscribe(
-        (res: LoginResponse) => {
-          localStorage.setItem('token', res.token);
-          this.authService.isAuthenticated = true;
-          this.userService.getUser();
-          this.router.navigate([ROUTES.courses]);
-          setTimeout(() => {
-            this.spinnerService.numberOfRequests--;
-          }, 700);
-        },
-        err => {
-          console.log(err.error);
-          setTimeout(() => {
-            this.spinnerService.numberOfRequests--;
-          }, 700);
-        }
-      );
+    this.store.dispatch(
+      new AuthAction.Login({ login: this.email, password: this.password })
+    );
   }
 }

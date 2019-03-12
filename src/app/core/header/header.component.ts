@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
 import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app-entities/classes/user.model';
-import { AuthService } from 'src/app/auth/auth.service';
-import { ROUTES } from 'src/app/consts/routes';
+import * as fromAuth from 'src/app/auth/reducers/auth.reducer';
+import * as AuthAction from 'src/app/auth/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +15,7 @@ import { ROUTES } from 'src/app/consts/routes';
 export class HeaderComponent implements OnInit {
   public constructor(
     private userService: UserService,
-    private authService: AuthService,
-    private router: Router
+    private store: Store<fromAuth.State>
   ) {}
 
   public ngOnInit() {}
@@ -24,13 +24,11 @@ export class HeaderComponent implements OnInit {
     return this.userService.currentUser;
   }
 
-  public get isAuthenticated(): boolean {
-    return this.authService.isAuthenticated;
+  public get isAuthenticated(): Observable<boolean> {
+    return this.store.pipe(select(fromAuth.getIsAuthenticated));
   }
 
   public logout(): void {
-    this.authService.logout();
-    this.userService.clearUser();
-    this.router.navigate([ROUTES.login]);
+    this.store.dispatch(new AuthAction.Logout());
   }
 }

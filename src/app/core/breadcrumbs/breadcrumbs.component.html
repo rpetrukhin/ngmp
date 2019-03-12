@@ -1,4 +1,4 @@
-<nav *ngIf="isAuthenticated">
+<nav *ngIf="(isAuthenticated | async)">
   <a routerLink="/courses">Courses</a>
   <span>{{ courseName }}</span>
 </nav>

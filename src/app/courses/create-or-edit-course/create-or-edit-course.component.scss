@@ -10,6 +10,10 @@ form {
   label {
     color: #787878;
     margin-bottom: 5px;
+
+    .error {
+      color: #34b7de;
+    }
   }
 
   input,
@@ -23,6 +27,11 @@ form {
     &:focus {
       outline: none;
     }
+  }
+
+  input.error,
+  textarea.error {
+    border: solid 2px #34b7de;
   }
 
   textarea {
@@ -49,9 +58,14 @@ form {
         outline: none;
       }
 
-      &:active {
+      &:active,
+      &:disabled {
         background: linear-gradient(rgba(white, 0.5), rgba(white, 0.5)),
           linear-gradient(to right, #e77883 0%, #f7954f 100%);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
       }
     }
 

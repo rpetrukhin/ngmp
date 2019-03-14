@@ -1,21 +1,61 @@
-<form>
-  <label>Title:</label>
-  <input [(ngModel)]="title" [ngModelOptions]="{ standalone: true }" />
-  <label>Description:</label>
-  <textarea
-    [(ngModel)]="description"
-    [ngModelOptions]="{ standalone: true }"
-  ></textarea>
-  <label>Date:</label>
+<form [formGroup]="courseControl">
+  <label>
+    Title:
+    <span
+      class="error"
+      *ngIf="
+        courseControl.controls.title.invalid &&
+        courseControl.controls.title.touched
+      "
+    >
+      Max length 50 symbols
+    </span>
+  </label>
   <input
-    type="date"
-    [(ngModel)]="date"
-    [ngModelOptions]="{ standalone: true }"
+    formControlName="title"
+    [ngClass]="
+      courseControl.controls.title.invalid &&
+      courseControl.controls.title.touched &&
+      'error'
+    "
   />
-  <label>Duration:</label>
-  <input [(ngModel)]="duration" [ngModelOptions]="{ standalone: true }" />
+
+  <label>
+    Description:
+    <span
+      class="error"
+      *ngIf="
+        courseControl.controls.description.invalid &&
+        courseControl.controls.description.touched
+      "
+    >
+      Max length 500 symbols
+    </span>
+  </label>
+  <textarea
+    formControlName="description"
+    [ngClass]="
+      courseControl.controls.description.invalid &&
+      courseControl.controls.description.touched &&
+      'error'
+    "
+  ></textarea>
+
+  <app-date-input formControlName="date"></app-date-input>
+
+  <app-duration-input formControlName="duration"></app-duration-input>
+
+  <app-authors-select
+    formControlName="authors"
+    [listOfAuthors]="listOfAuthors"
+  ></app-authors-select>
+
   <div class="buttonsContainer">
-    <button (click)="cancel()" class="cancel" type="button">Cancel</button>
-    <button (click)="save()" type="button">Save</button>
+    <button (click)="cancel()" class="cancel" type="button">
+      Cancel
+    </button>
+    <button (click)="save()" [disabled]="courseControl.invalid" type="button">
+      Save
+    </button>
   </div>
 </form>

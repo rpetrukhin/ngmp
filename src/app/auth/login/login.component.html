@@ -1,13 +1,5 @@
-<form>
-  <input
-    placeholder="Email"
-    [(ngModel)]="email"
-    [ngModelOptions]="{ standalone: true }"
-  />
-  <input
-    placeholder="Password"
-    [(ngModel)]="password"
-    [ngModelOptions]="{ standalone: true }"
-  />
+<form [formGroup]="loginControl">
+  <input placeholder="Email" formControlName="email" />
+  <input placeholder="Password" formControlName="password" />
   <button type="button" (click)="login()">Login</button>
 </form>

@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 import { ROUTES } from 'src/app/consts/routes';
 
@@ -19,7 +20,7 @@ import { ROUTES } from 'src/app/consts/routes';
 export class CoursesPanelComponent implements OnInit, OnDestroy {
   @Output() public searched = new EventEmitter<string>();
 
-  public searchText: string;
+  public searchTextControl: FormControl = new FormControl('');
 
   private subject: Subject<string> = new Subject();
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 
@@ -7,6 +8,7 @@ import { CoursesService } from '../courses.service';
 import { CoursesListItem } from 'src/app-entities/classes/courses-list-item.model';
 import { ROUTES } from 'src/app/consts/routes';
 import { SpinnerService } from 'src/app/spinner/spinner.service';
+import { Author } from 'src/app-entities/classes/author.model';
 
 @Component({
   selector: 'app-create-or-edit-course',
@@ -15,13 +17,10 @@ import { SpinnerService } from 'src/app/spinner/spinner.service';
 })
 export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
   private routeSub: Subscription;
-  private courseSubs: Subscription[] = [];
   private course: CoursesListItem = null;
 
-  public title: string;
-  public description: string;
-  public date: string;
-  public duration: number;
+  public courseControl: FormGroup;
+  public listOfAuthors: Array<Author>;
 
   public constructor(
     private route: ActivatedRoute,
@@ -31,85 +30,110 @@ export class CreateOrEditCourseComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
+    this.courseControl = new FormGroup({
+      title: new FormControl(null, Validators.maxLength(50)),
+      description: new FormControl(null, Validators.maxLength(500)),
+      date: new FormControl(null),
+      duration: new FormControl(null),
+      authors: new FormControl(null),
+    });
+
     this.routeSub = this.route.params.subscribe(params => {
       if (params.id) {
         this.spinnerService.numberOfRequests++;
-        this.courseSubs.push(
-          this.coursesService
-            .getCourse(Number(params.id))
-            .subscribe((res: CoursesListItem) => {
-              this.course = res;
-              this.title = this.course.title;
-              this.description = this.course.description;
-              this.date = moment(this.course.creationDate).format('YYYY-MM-DD');
-              this.duration = this.course.duration;
-              setTimeout(() => {
-                this.spinnerService.numberOfRequests--;
-              }, 700);
-            })
-        );
+        this.coursesService
+          .getCourse(Number(params.id))
+          .subscribe((res: CoursesListItem) => {
+            this.course = res;
+            this.courseControl.setValue({
+              title: this.course.title,
+              description: this.course.description,
+              date: moment(this.course.creationDate).format('YYYY-MM-DD'),
+              duration: this.course.duration,
+              authors: JSON.stringify(this.course.authors),
+            });
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          });
       }
     });
+
+    this.spinnerService.numberOfRequests++;
+    this.coursesService.getAuthors().subscribe(
+      (res: Array<Author>) => {
+        this.listOfAuthors = res;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        setTimeout(() => {
+          this.spinnerService.numberOfRequests--;
+        }, 700);
+      }
+    );
   }
 
   public ngOnDestroy() {
     this.routeSub.unsubscribe();
-    this.courseSubs.forEach(courseSub => courseSub.unsubscribe());
   }
 
   public save() {
     this.spinnerService.numberOfRequests++;
     if (this.course) {
-      this.courseSubs.push(
-        this.coursesService
-          .updateCourse({
-            ...this.course,
-            title: this.title,
-            description: this.description,
-            creationDate: moment(this.date).format('YYYY-MM-DDTHH:MM:SSZ'),
-            duration: this.duration,
-          })
-          .subscribe(
-            res => {
-              this.router.navigate([ROUTES.courses]);
-              setTimeout(() => {
-                this.spinnerService.numberOfRequests--;
-              }, 700);
-            },
-            err => {
-              console.log(err);
-              setTimeout(() => {
-                this.spinnerService.numberOfRequests--;
-              }, 700);
-            }
-          )
-      );
+      this.coursesService
+        .updateCourse({
+          ...this.course,
+          title: this.courseControl.value.title,
+          description: this.courseControl.value.description,
+          creationDate: moment(this.courseControl.value.date).format(
+            'YYYY-MM-DDTHH:MM:SSZ'
+          ),
+          duration: this.courseControl.value.duration,
+          authors: JSON.parse(this.courseControl.value.authors),
+        })
+        .subscribe(
+          res => {
+            this.router.navigate([ROUTES.courses]);
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          },
+          err => {
+            console.log(err);
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          }
+        );
     } else {
-      this.courseSubs.push(
-        this.coursesService
-          .createCourse({
-            id: Date.now(),
-            title: this.title,
-            description: this.description,
-            creationDate: moment(this.date).format('YYYY-MM-DDTHH:MM:SSZ'),
-            duration: this.duration,
-            topRated: false,
-          })
-          .subscribe(
-            res => {
-              this.router.navigate([ROUTES.courses]);
-              setTimeout(() => {
-                this.spinnerService.numberOfRequests--;
-              }, 700);
-            },
-            err => {
-              console.log(err);
-              setTimeout(() => {
-                this.spinnerService.numberOfRequests--;
-              }, 700);
-            }
-          )
-      );
+      this.coursesService
+        .createCourse({
+          id: Date.now(),
+          title: this.courseControl.value.title,
+          description: this.courseControl.value.description,
+          creationDate: moment(this.courseControl.value.date).format(
+            'YYYY-MM-DDTHH:MM:SSZ'
+          ),
+          duration: this.courseControl.value.duration,
+          topRated: false,
+          authors: JSON.parse(this.courseControl.value.authors),
+        })
+        .subscribe(
+          res => {
+            this.router.navigate([ROUTES.courses]);
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          },
+          err => {
+            console.log(err);
+            setTimeout(() => {
+              this.spinnerService.numberOfRequests--;
+            }, 700);
+          }
+        );
     }
   }
 

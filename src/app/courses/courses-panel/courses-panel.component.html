@@ -1,8 +1,8 @@
-<div class="container">
+<form class="container">
   <input
     placeholder="Name or fragment of description (enter at least 3 characters)"
-    [(ngModel)]="searchText"
+    [formControl]="searchTextControl"
     (keyup)="onKeyUp($event)"
   />
-  <button (click)="addCourse()">Add course</button>
-</div>
+  <button (click)="addCourse()" type="button">Add course</button>
+</form>

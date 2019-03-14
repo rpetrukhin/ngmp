@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: #787878;
+    margin-bottom: 5px;
+
+    .error {
+      color: #34b7de;
+    }
+  }
+
+  section {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: solid 2px #e77883;
+    border-radius: 5px;
+    cursor: text;
+
+    .selectedAuthor {
+      display: flex;
+      align-items: center;
+      margin: 5px;
+      padding: 5px;
+      border: solid 2px #e77883;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #787878;
+
+      &:focus {
+        outline: none;
+        border-color: #34b7de;
+      }
+
+      button {
+        width: 25px;
+        height: 25px;
+        margin-left: 10px;
+        padding: 0px;
+        border: 1.5px solid #34b7de;
+        border-radius: 100%;
+        background-color: transparent;
+        color: #34b7de;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:active {
+          background-color: #34b7de4d;
+        }
+      }
+    }
+
+    input {
+      flex: 1;
+      margin: 5px;
+      border: none;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      color: #787878;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  section.menuOpened {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  section.error {
+    border-color: #34b7de;
+  }
+
+  ul {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    list-style: none;
+    border: solid 2px #e77883;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    li {
+      padding: 10px;
+      font-size: 16px;
+      color: #787878;
+
+      &:hover {
+        background: linear-gradient(
+            rgba(255, 255, 255, 0.2),
+            rgba(255, 255, 255, 0.2)
+          ),
+          linear-gradient(to right, #e77883 0%, #f7954f 100%);
+      }
+    }
+  }
+}

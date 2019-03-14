@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: #787878;
+    margin-bottom: 5px;
+
+    .error {
+      color: #34b7de;
+    }
+  }
+
+  input {
+    border: solid 2px #e77883;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #787878;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  input.error {
+    border: solid 2px #34b7de;
+  }
+}

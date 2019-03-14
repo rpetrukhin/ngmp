@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: #787878;
+    margin-bottom: 5px;
+  }
+
+  input {
+    border: solid 2px #e77883;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #787878;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

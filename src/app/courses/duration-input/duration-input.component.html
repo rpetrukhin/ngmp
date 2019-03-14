@@ -1,0 +1,13 @@
+<div class="container">
+  <label>
+    Duration:
+    <span class="error" *ngIf="!isValid && isTouched">
+      Only numbers are allowed
+    </span>
+  </label>
+  <input
+    [(ngModel)]="value"
+    (blur)="onBlur()"
+    [ngClass]="!isValid && isTouched && 'error'"
+  />
+</div>

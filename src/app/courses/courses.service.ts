@@ -39,4 +39,8 @@ export class CoursesService {
   deleteCourse(id: number): Observable<Object> {
     return this.http.delete(`http://localhost:3004/courses/${id}`);
   }
+
+  getAuthors(): Observable<Object> {
+    return this.http.get(`http://localhost:3004/authors`);
+  }
 }
